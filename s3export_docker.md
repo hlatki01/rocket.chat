@@ -1,3 +1,7 @@
+This installation guide was tested in the following environment:
+Rocket.Chat 4.0.5
+OS: Ubuntu LTS 20.0.1
+Mongodb 4.12.2
 
 ### 1. Send the export file to your server, in this case cURL was used:
 
