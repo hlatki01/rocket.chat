@@ -91,11 +91,11 @@ for (let type of ['uploads', 'avatars']) {
         delete cursor.AmazonS3;
         cursor.store = 'FileSystem:Uploads';
         cursor.url = cursor.url.replace(RegExp(`^${oldUrl}`), newUrl);
-        cursor.url = cursor.url.replace(RegExp(`^${newUrl}ufs/AmazonS3:`), `${new
+        cursor.url = cursor.url.replace(RegExp(`^${newUrl}ufs/AmazonS3:`), `${newUrl}ufs/FileSystem:`);
         cursor.path = cursor.path.replace(
             RegExp('^/ufs/AmazonS3:'),
             '/ufs/FileSystem:'
-            );
+        );
         db[`rocketchat_${type}`].save(cursor);
     });
 }
