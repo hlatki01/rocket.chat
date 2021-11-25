@@ -110,5 +110,5 @@ exit
 ### 14. Get the rocketchat container up again:
 
 ```
-docker-compose rc_rocketchat_1 down
+docker-compose up -d
 ```
