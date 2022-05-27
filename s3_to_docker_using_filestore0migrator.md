@@ -1,6 +1,8 @@
 ### 1) Create the Rocket.Chat container using the docker-compose.yml file:
 [docker-compose.yml](https://github.com/hlatki01/rocket.chat/blob/main/docker-compose.yml)
 
+Note: in this case the Rocket.Chat server container name is `rocketchat_rocketchat_1` and the mongodb container is `rocketchat_mongo_1`, you can get yours by using the command: `docker ps`
+
 ### 1.1) Get your container up and wait for the container creation
 ```
 docker-compose up -d
