@@ -1,7 +1,5 @@
 ### 1) Create the Rocket.Chat container using the docker-compose.yml file:
-```
 [docker-compose.yml](https://github.com/hlatki01/rocket.chat/blob/main/docker-compose.yml)
-```
 
 ### 1.1) Get your container up and wait for the container creation
 ```
