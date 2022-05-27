@@ -1,0 +1,52 @@
+version: '2'
+
+services:
+  mongo:
+    image: mongo:5.0.6
+    restart: unless-stopped
+    volumes:
+     - ./data/db:/data/db
+    command: mongod --oplogSize 128 --replSet rs0 --storageEngine=wiredTiger
+
+  mongo-init-replica:
+    image: mongo:5.0.6
+    command: >
+      bash -c
+        "for i in `seq 1 30`; do
+          mongo mongo/rocketchat --eval \"
+            rs.initiate({
+              _id: 'rs0',
+              members: [ { _id: 0, host: 'mongo:27017' } ]})\" &&
+          s=$$? && break || s=$$?;
+          echo \"Tried $$i times. Waiting 5 secs...\";
+          sleep 5;
+        done; (exit $$s)"
+    depends_on:
+      - mongo
+
+  rocketchat:
+    image: rocketchat/rocket.chat:4.7.2
+    command: >
+      bash -c
+        "for i in `seq 1 30`; do
+          node main.js &&
+          s=$$? && break || s=$$?;
+          echo \"Tried $$i times. Waiting 5 secs...\";
+          sleep 5;
+        done; (exit $$s)"
+    restart: unless-stopped
+    volumes:
+      - ./uploads:/app/uploads
+    environment:
+      - PORT=3000
+      - ROOT_URL=https://YOURNEWROCKETCHATSERVER.com
+      - MONGO_URL=mongodb://mongo:27017/rocketchat
+      - Accounts_UseDNSDomainCheck=False
+      - OVERWRITE_SETTING_Show_Setup_Wizard=completed
+      - ADMIN_USERNAME=ANYADMUSER
+      - ADMIN_PASS=123
+      - ADMIN_EMAIL=ANYADMUSER@YOURDOMAIN.com
+    depends_on:
+      - mongo
+    ports:
+      - 3000:3000
