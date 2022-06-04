@@ -10,7 +10,7 @@ docker-compose up -d
 
 ### 1.2) Get the Rocket.Chat container down and keep the mongodb container running
 ```
-docker-compose rocketchat_rocketchat_1 down
+docker stop rocketchat_rocketchat_1
 ```
 
 ### 2) If your files are multipart, join them by using cat:
